@@ -12,10 +12,10 @@ exports.calculate = function(req, res) {
 
   var operations = {
     // this should work now
-    'add':      function(a,b) { return a + b },
-    'subtract': function(a,b) { return a - b },
-    'multiply': function(a,b) { return a * b },
-    'divide':   function(a,b) { return a / b },
+    'add':      function(a,b) { return toNonExponential(+a + +b) },
+    'subtract': function(a,b) { return toNonExponential(a - b) },
+    'multiply': function(a,b) { return toNonExponential(a * b) },
+    'divide':   function(a,b) { return toNonExponential(a / b) },
   };
 
   // Determine the operation
@@ -48,4 +48,7 @@ exports.calculate = function(req, res) {
   var operand2 = parseInt(req.query.operand2, 10);
 
   res.json({ result: operation(req.query.operand1, req.query.operand2) });
+  function toNonExponential(num) {
+    return String(num).substr(0,8);
+ }
 };
